@@ -2,11 +2,8 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'sistema_matriculas',
-    password: process.env.DB_PASSWORD || 'password',
-    port: process.env.DB_PORT || 5432,
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false } 
 });
 
 const inicializarDB = async () => {
@@ -23,9 +20,9 @@ const inicializarDB = async () => {
                 fecha_nacimiento DATE
             );
         `);
-        console.log('✅ Conexión a PostgreSQL y tabla de alumnos verificada');
+        console.log('✅ Conexión a la nube de Supabase exitosa y tabla lista');
     } catch (error) {
-        console.error('❌ Error al crear la tabla', error);
+        console.error('❌ Error al conectar a Supabase', error);
     }
 };
 
