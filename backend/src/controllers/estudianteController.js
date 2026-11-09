@@ -47,11 +47,11 @@ exports.eliminarEstudiante = async (req, res) => {
 exports.actualizarEstado = async (req, res) => {
     try {
         const { id } = req.params;
-        const { estado } = req.body;
+        const { estado, observacion } = req.body;
         
         const result = await db.query(
-            'UPDATE alumnos SET estado = $1 WHERE id_alumno = $2 RETURNING *',
-            [estado, id]
+            'UPDATE alumnos SET estado = $1, observacion = $2 WHERE id_alumno = $3 RETURNING *',
+            [estado, observacion || null, id]
         );
         
         if (result.rows.length === 0) {
